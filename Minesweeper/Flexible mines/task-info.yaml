@@ -95,6 +95,9 @@ files:
         }
     }
   learner_created: false
+- name: src/minesweeper/Minesweeper.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/77/stages/427/implement
 status: Unchecked
 record: -1
