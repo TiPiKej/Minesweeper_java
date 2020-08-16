@@ -34,7 +34,7 @@ public class Minesweeper {
     }
 
     public void createField() {
-        final char empty = 'x';
+        final char empty = '.';
 
         field = new char[height][width];
         for (int i = 0; i < height; i++) {
@@ -43,8 +43,21 @@ public class Minesweeper {
 
         for (int i = 0; i < bombs; i++) {
             int j = random(0, height * width - i);
-            while (field[j / height][j % width] == 'X') j++;
-            field[j / height][j % width] = 'X';
+            int k = 0;
+            int l = 0;
+            while (k < j) {
+                if (field[l / height][l % width] == empty) k++;
+
+                if (l == height * width - 1) l = 0;
+                else l++;
+            }
+
+            while (field[l / height][l % width] != empty) {
+                if (l == height * width - 1) l = 0;
+                else l++;
+            }
+
+            field[l / height][l % width] = 'X';
         }
     }
 
