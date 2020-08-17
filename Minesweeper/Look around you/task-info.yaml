@@ -144,6 +144,13 @@ files:
         }
     }
   learner_created: false
+- name: src/minesweeper/Minesweeper.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/77/stages/428/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/77/stages/428/implement">JetBrains
+    Academy</a>
+  time: Mon, 17 Aug 2020 16:24:24 UTC
 record: -1

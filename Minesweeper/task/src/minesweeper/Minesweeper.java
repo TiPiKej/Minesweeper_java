@@ -6,7 +6,7 @@ import java.util.Random;
 public class Minesweeper {
     private int width;
     private int height;
-    private char[][] field;
+    private int[][][] field;
     private int bombs;
 
     public Minesweeper(int width, int height, int bombs) {
@@ -34,30 +34,65 @@ public class Minesweeper {
     }
 
     public void createField() {
-        final char empty = '.';
+//        initialize
+        field = new int[height][width][2]; // third directional: isBomb(1 - yes, 0 - no), how much around him
+//        for (int i = 0; i < height; i++) {
+//            Arrays.fill(field[i], new String[2]);
+//        }
 
-        field = new char[height][width];
-        for (int i = 0; i < height; i++) {
-            Arrays.fill(field[i], empty);
-        }
-
+//        fill with bombs
         for (int i = 0; i < bombs; i++) {
             int j = random(0, height * width - i);
             int k = 0;
             int l = 0;
             while (k < j) {
-                if (field[l / height][l % width] == empty) k++;
+                if (field[l / height][l % width][0] == 0) k++;
 
                 if (l == height * width - 1) l = 0;
                 else l++;
             }
 
-            while (field[l / height][l % width] != empty) {
+            while (field[l / height][l % width][0] == 1) {
                 if (l == height * width - 1) l = 0;
                 else l++;
             }
 
-            field[l / height][l % width] = 'X';
+            field[l / height][l % width][0] = 1;
+        }
+
+//        calculate how much around bombs is
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (field[i][j][0] == 1) { // if its a bomb
+                    field[i][j][1] = -1;
+                    continue;
+                }
+                int count = 0;
+
+//              ******************
+//                checking sides
+//              ******************
+
+//                top
+                if (i != 0) if (field[i - 1][j][0] == 1) count++;
+//                left
+                if (j != 0) if (field[i][j - 1][0] == 1) count++;
+//                down
+                if (i != height - 1) if (field[i + 1][j][0] == 1) count++;
+//                right
+                if (j != width - 1) if (field[i][j + 1][0] == 1) count++;
+
+//                top-left
+                if (i != 0 && j != 0) if (field[i - 1][j - 1][0] == 1) count++;
+//                top-right
+                if (i != 0 && j != width - 1) if (field[i - 1][j + 1][0] == 1) count++;
+//                down-left
+                if (i != height - 1 && j != 0) if (field[i + 1][j - 1][0] == 1) count++;
+//                down-right
+                if (i != height - 1 && j != width - 1) if (field[i + 1][j + 1][0] == 1) count++;
+
+                field[i][j][1] = count;
+            }
         }
     }
 
@@ -74,7 +109,9 @@ public class Minesweeper {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                ret.append(field[i][j]);
+                ret.append(field[i][j][0] == 1 ? "X" :
+                        (field[i][j][1] == 0 ? "." : String.valueOf(field[i][j][1]))
+                );
             }
             ret.append(newLine);
         }

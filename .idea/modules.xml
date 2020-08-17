@@ -6,6 +6,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Minesweeper/task/Minesweeper-task.iml" filepath="$PROJECT_DIR$/.idea/modules/Minesweeper/task/Minesweeper-task.iml" group="Minesweeper/Minesweeper-task" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Minesweeper/task/Minesweeper-task_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Minesweeper/task/Minesweeper-task_main.iml" group="Minesweeper/Minesweeper-task" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Minesweeper/task/Minesweeper-task_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Minesweeper/task/Minesweeper-task_test.iml" group="Minesweeper/Minesweeper-task" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Problems/Creating instances/Problems-Creating_instances.iml" filepath="$PROJECT_DIR$/.idea/modules/Problems/Creating instances/Problems-Creating_instances.iml" group="Minesweeper/Problems-Creating_instances" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Problems/Creating instances/Problems-Creating_instances_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Problems/Creating instances/Problems-Creating_instances_main.iml" group="Minesweeper/Problems-Creating_instances" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Problems/Creating instances/Problems-Creating_instances_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Problems/Creating instances/Problems-Creating_instances_test.iml" group="Minesweeper/Problems-Creating_instances" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util.iml" group="Minesweeper/util" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_main.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_main.iml" group="Minesweeper/util" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_test.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_test.iml" group="Minesweeper/util" />
