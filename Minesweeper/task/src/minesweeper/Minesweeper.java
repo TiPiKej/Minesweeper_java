@@ -1,6 +1,8 @@
 package minesweeper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Minesweeper {
@@ -8,11 +10,14 @@ public class Minesweeper {
     private int height;
     private int[][][] field;
     private int bombs;
+    private int vote;
+    private final List<Integer[]> bombsArr = new ArrayList<>();
 
     public Minesweeper(int width, int height, int bombs) {
         this.width = width;
         this.height = height;
         this.bombs = bombs;
+        this.vote = 0;
 
         createField();
     }
@@ -21,6 +26,7 @@ public class Minesweeper {
         this.height = 9;
         this.width = 9;
         this.bombs = bombs;
+        this.vote = 0;
 
         createField();
     }
@@ -29,16 +35,14 @@ public class Minesweeper {
         this.height = 9;
         this.width = 9;
         this.bombs = 10;
+        this.vote = 0;
 
         createField();
     }
 
     public void createField() {
 //        initialize
-        field = new int[height][width][2]; // third directional: isBomb(1 - yes, 0 - no), how much around him
-//        for (int i = 0; i < height; i++) {
-//            Arrays.fill(field[i], new String[2]);
-//        }
+        field = new int[height][width][3]; // third directional: isBomb(1 - yes, 0 - no), how much around him, if was guessed(1 - yes, 0 - no))
 
 //        fill with bombs
         for (int i = 0; i < bombs; i++) {
@@ -58,13 +62,14 @@ public class Minesweeper {
             }
 
             field[l / height][l % width][0] = 1;
+            bombsArr.add(new Integer[]{l / height, l % width});
         }
 
 //        calculate how much around bombs is
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (field[i][j][0] == 1) { // if its a bomb
-                    field[i][j][1] = -1;
+                    field[i][j][1] = 0;
                     continue;
                 }
                 int count = 0;
@@ -101,20 +106,73 @@ public class Minesweeper {
         return gen.nextInt(end - start + 1) + start;
     }
 
+    public int guess(int x, int y) {
+        System.out.println(x + "..." + y);
+        if (field[x][y][1] > 0 && field[x][y][0] == 0) {
+            return 1;
+        }
+
+        if (field[x][y][2] == 0) {
+            field[x][y][2] = 1;
+            vote++;
+        } else {
+            field[x][y][2] = 0;
+            vote--;
+        }
+
+        return 0;
+    }
+
+    public boolean checkIfWin() {
+        if (vote != bombs) return false;
+
+        for (Integer[] bomb : bombsArr) {
+            if (field[bomb[0]][bomb[1]][2] == 0) return false;
+        }
+
+        return true;
+    }
+
     @Override
     public String toString() {
         final String newLine = "\n";
+        final String horizontalSeparator = "—";
+        final String verticalSeparator = "|";
+        final StringBuilder lineBreak = new StringBuilder(horizontalSeparator + verticalSeparator);
 
         final StringBuilder ret = new StringBuilder();
 
+//        first Line
+        ret.append(" " + verticalSeparator);
+        for (int i = 0; i < width; i++) {
+            ret.append(i + 1);
+            lineBreak.append(horizontalSeparator);
+        }ret.append(verticalSeparator + newLine);
+        lineBreak.append(verticalSeparator + newLine);
+
+//        break line
+        ret.append(lineBreak);
+
+//        actually field
+        // third directional: [isBomb(1 - yes, 0 - no), how much around him, if was vote(1 - yes, 0 - no))]
         for (int i = 0; i < height; i++) {
+            ret.append((i + 1) + verticalSeparator);
             for (int j = 0; j < width; j++) {
-                ret.append(field[i][j][0] == 1 ? "X" :
-                        (field[i][j][1] == 0 ? "." : String.valueOf(field[i][j][1]))
+                ret.append(
+                        field[i][j][2] == 1 ?
+                                "*" :
+                                (field[i][j][1] == 0 ? "." : String.valueOf(field[i][j][1]))
                 );
+//                ret.append(field[i][j][0] == 1 ?
+//                        (field[i][j][1] == 0 ? "." : "*") :
+//                        (field[i][j][1] == 0 ? "." : String.valueOf(field[i][j][1]))
+//                );
             }
-            ret.append(newLine);
+            ret.append(verticalSeparator + newLine);
         }
+
+//        break line
+        ret.append(lineBreak);
 
         return ret.toString();
     }
